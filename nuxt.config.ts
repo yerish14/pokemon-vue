@@ -20,7 +20,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules:[
     // add node modules here
-    "@nuxtjs/tailwindcss",
-    'nuxt-proxy'
+    // "@nuxtjs/tailwindcss",
+    'nuxt-proxy',
+    '@nuxt/ui'
   ]
 })

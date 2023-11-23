@@ -11,14 +11,13 @@ useHead({
     ]
 })
 let pokemons = ref([])
-let totalPages = ref();//total of pages
+let totalItems = ref(0);//total of pages
 let nextPage = ref();
 let previousPage = ref();
 
 
 // vars for pagination
 let currentPage = ref(1)
-let havePrevious = ref(false)
 let limit=ref(20);
 let offset= ref(20);
 let pokeData = ref([])
@@ -31,17 +30,18 @@ const fetchData=async(limit,offset)=>{
 
     const response = await useFetch(`https://pokeapi.co/api/v2/pokemon${offsetVal}${maxLimit}`);
     const { count, next, previous, results } = await response.data.value
-    
-    if (results.length > 0) {
+    // check if results has data and the response status is success
+    if (results.length > 0 && response.status.value ==='success') {
         pokemons.value = results;
         nextPage.value= next;
         previousPage.value= previous;
+        totalItems.value=count;
     }
+    // 1292 / 20 = 64.6
 }
 
 await fetchData('','');
 
-console.log(pokeData.value);
 const onPreviousClick=async()=>{
     offset.value=offset.value-20;
        await fetchData(limit.value,offset.value);
@@ -52,8 +52,6 @@ const onNextClick=async()=>{
    await fetchData(limit.value,offset.value);
 }
 
-
-
 </script>
 <template>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -63,6 +61,8 @@ const onNextClick=async()=>{
         <TwPagination
         :previousPage="previousPage"
         :nextPage="nextPage"
+        :totalItems="totalItems"
+        :limit="limit"
         @on-previous-click="onPreviousClick"
           @on-next-click="onNextClick"
         />
