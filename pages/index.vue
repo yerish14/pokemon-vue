@@ -24,17 +24,22 @@ let offset= ref(20);
 let pokeData = ref([])
 
 // data fetching
-const onGetPokemons = async () => {
-    const response = await useFetch(`https://pokeapi.co/api/v2/pokemon`);
+const fetchData=async(limit,offset)=>{
+    // validate dat
+    let maxLimit= (limit !='')? `&limit=${limit}` : ''
+    let offsetVal= (offset!='')? `?offset=${offset}`:''
+
+    const response = await useFetch(`https://pokeapi.co/api/v2/pokemon${offsetVal}${maxLimit}`);
     const { count, next, previous, results } = await response.data.value
-  
+    
     if (results.length > 0) {
         pokemons.value = results;
         nextPage.value= next;
         previousPage.value= previous;
     }
 }
-await onGetPokemons();
+
+await fetchData('','');
 
 console.log(pokeData.value);
 const onPreviousClick=async()=>{
@@ -47,16 +52,7 @@ const onNextClick=async()=>{
    await fetchData(limit.value,offset.value);
 }
 
-const fetchData=async(limit,offset)=>{
-    const response = await useFetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`);
-    const { count, next, previous, results } = await response.data.value
-    
-    if (results.length > 0) {
-        pokemons.value = results;
-        nextPage.value= next;
-        previousPage.value= previous;
-    }
-}
+
 
 </script>
 <template>
