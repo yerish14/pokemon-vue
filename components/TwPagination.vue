@@ -17,7 +17,7 @@ defineEmits(["on-next-click", "on-previous-click"])
 </script>
 
 <template>
-    <!-- <nav
+    <nav
               class="mt-12 mb-12 px-4 py-3 sm:px-5 md:px-5 lg:px-5"
               aria-label="Pagination"
             >
@@ -33,8 +33,8 @@ defineEmits(["on-next-click", "on-previous-click"])
                 >
                 <span>Next</span>
               </a>
-            </nav> -->
-    <div class="mt-12 mb-12">
+            </nav>
+    <!-- <div class="mt-12 mb-12">
         <UPagination v-model="page" :page-count="20" :total="items.length" />
-    </div>
+    </div> -->
 </template>

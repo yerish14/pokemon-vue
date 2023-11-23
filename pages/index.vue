@@ -37,7 +37,6 @@ const fetchData=async(limit,offset)=>{
         previousPage.value= previous;
         totalItems.value=count;
     }
-    // 1292 / 20 = 64.6
 }
 
 await fetchData('','');
