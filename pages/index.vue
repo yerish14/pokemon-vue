@@ -15,7 +15,6 @@ let totalItems = ref(0);//total of pages
 let nextPage = ref();
 let previousPage = ref();
 
-
 // vars for pagination
 let currentPage = ref(1)
 let limit=ref(20);
@@ -28,7 +27,7 @@ const fetchData=async(limit,offset)=>{
     let maxLimit= (limit !='')? `&limit=${limit}` : ''
     let offsetVal= (offset!='')? `?offset=${offset}`:''
 
-    const response = await useFetch(`https://pokeapi.co/api/v2/pokemon${offsetVal}${maxLimit}`);
+    const response = await useFetch(`${process.env.BASE_API_URL}/pokemon/${offsetVal}${maxLimit}`);
     const { count, next, previous, results } = await response.data.value
     // check if results has data and the response status is success
     if (results.length > 0 && response.status.value ==='success') {
